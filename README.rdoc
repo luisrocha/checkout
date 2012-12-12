@@ -1,19 +1,82 @@
-= checkout
+== description
 
-Description goes here.
+This is a prototype checkout system for a job application at
+notonthehighstreet.com programming test, according to the following description:
 
-== Contributing to checkout
- 
-* Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet.
-* Check out the issue tracker to make sure someone already hasn't requested it and/or contributed it.
-* Fork the project.
-* Start a feature/bugfix branch.
-* Commit and push until you are happy with your contribution.
-* Make sure to add tests for it. This is important so I don't break it in a future version unintentionally.
-* Please try not to mess with the Rakefile, version, or history. If you want to have your own version, or is otherwise necessary, that is fine, but please isolate to its own commit so I can cherry-pick around it.
+--------------------------------------------------------------------------------
 
-== Copyright
+notonthehighstreet.com is an online marketplace, here is a sample of some of the
+products available on our site:
 
-Copyright (c) 2012 Luis Rocha. See LICENSE.txt for
-further details.
+Product code  | Name                   | Price
+----------------------------------------------------------
+001           | Travel Card Holder     | £9.25
+002           | Personalised cufflinks | £45.00
+003           | Kids T-shirt           | £19.95
 
+Our marketing team want to offer promotions as an incentive for our customers to
+purchase these items.
+
+If you spend over £60, then you get 10% off your purchase
+If you buy 2 or more travel card holders then the price drops to £8.50.
+
+Our check-out can scan items in any order, and because our promotions will
+change, it needs to be flexible regarding our promotional rules.
+
+The interface to our checkout looks like this (shown in Ruby):
+
+  co = Checkout.new(promotional_rules)
+  co.scan(item)
+  co.scan(item)
+  price = co.total
+
+Implement a checkout system that fulfills these requirements.
+
+Test data
+---------
+Basket: 001,002,003
+Total price expected: £66.78
+
+Basket: 001,003,001
+Total price expected: £36.95
+
+Basket: 001,002,001,003
+Total price expected: £73.76
+
+== Using this Gem
+
+=== Creating Products
+
+In order to instantiate a new product create a new Item object:
+
+Item.new("001", "Travel Card Holder", 9.25)
+
+The item is automatically added to a Class Variable (Hash) that represents the
+store product catalog. Items can be removed from this hash by invoking the
+"delete" method from the instantiated object.
+
+=== Defining Promotional Rules
+
+Special rules (i.e. discounts) to be applied in the total price calculation can
+be created using the PromotionalRule constructor method. This method accepts a
+string with the name of the rule and a block of code, as the following example:
+
+# If you spend over £60, then you get 10% of your purchase
+PromotionalRule.new( "10% discount on buys over 60£" ) do
+    if @total > 60.0
+      @discount = @total * 0.10
+    end
+end
+
+Important notes! Programmers must have into account the following assumptions:
+
+* The block of code will be executed in the context of a Checkout instance, so
+it must only use variables and methods that can be accessed by that object;
+
+* The rules are executed in the same order as they are passed to the Checkout
+object and each rule affects the results for the next rules, so order of
+execution must be taken into consideration;
+
+* The current total price can be accessed through the variable @total but, since
+this variable is updated after each rule being executed, any change to @total is
+irrelevant.

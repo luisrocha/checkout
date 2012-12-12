@@ -17,8 +17,8 @@ Jeweler::Tasks.new do |gem|
   gem.name = "checkout"
   gem.homepage = "http://github.com/luisrocha/checkout"
   gem.license = "MIT"
-  gem.summary = %Q{TODO: one-line summary of your gem}
-  gem.description = %Q{TODO: longer description of your gem}
+  gem.summary = "online store checkout system"
+  gem.description = "checkout system for a job application programming test"
   gem.email = "luis88rocha@gmail.com"
   gem.authors = ["Luis Rocha"]
   # dependencies defined in Gemfile
