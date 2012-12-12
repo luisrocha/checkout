@@ -63,8 +63,18 @@ Special rules (i.e. discounts) to be applied in the total price calculation can 
         end
     end
 
-*Important notes!* Programmers must have into account the following assumptions:
+<b>Important notes!</b>
+Programmers must define promotional rules taking in mind that the final total price is obtained by:
+
+    @total = 0
+    @basket.each do |item, quant|
+        @total += @price[item] * quant # quant == @basket[item]
+    end
+    @total -= @discount
+
+Programmers must also have into account the following assumptions:
 
 * The block of code will be executed in the context of a Checkout instance, so it must only use variables and methods that can be accessed by that object;
 * The rules are executed in the same order as they are passed to the Checkout object and each rule affects the results for the next rules, so order of execution must be taken into consideration;
 * The current total price can be accessed through the variable @total but, since this variable is updated after each rule being executed, any change to @total is irrelevant.
+
