@@ -63,7 +63,7 @@ Special rules (i.e. discounts) to be applied in the total price calculation can 
         end
     end
 
-<emp>Important notes!</emp> Programmers must have into account the following assumptions:
+*Important notes!* Programmers must have into account the following assumptions:
 
 * The block of code will be executed in the context of a Checkout instance, so it must only use variables and methods that can be accessed by that object;
 * The rules are executed in the same order as they are passed to the Checkout object and each rule affects the results for the next rules, so order of execution must be taken into consideration;
